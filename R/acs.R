@@ -189,16 +189,11 @@ get_acs <- function(geography, variables = NULL, table = NULL, cache_table = FAL
   }
 
   # Handle new definition of MSAs for 2021 and later (5-year ACS only)
+  # Previously, this would convert the geography to "metropolitan/micropolitan statistical area"
+  # As of 2023-04-21, that no longer works, and now the previously-used
+  # metropolitan statistical area/micropolitan statistical area definition must be used.
   if (geography == "cbsa") {
-    if (year > 2020 && survey == "acs5") {
-      geography <- "metropolitan/micropolitan statistical area"
-    } else {
-      geography <- "metropolitan statistical area/micropolitan statistical area"
-    }
-  }
-
-  if (geography == "metropolitan statistical area/micropolitan statistical area" && year >= 2021 && survey == "acs5") {
-    geography <- "metropolitan/micropolitan statistical area"
+    geography <- "metropolitan statistical area/micropolitan statistical area"
   }
 
   # Other aliases
